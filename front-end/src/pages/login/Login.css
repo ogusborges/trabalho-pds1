@@ -1,0 +1,42 @@
+#loginContainer {
+    display: flex;
+    width: 20%;
+    height: 85%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    border: 1px solid #363478;
+}
+
+#loginFormContainer {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0em 2em;
+}
+
+#loginFormContainer > label>  h4 {
+    font-weight: 300;
+    margin: 5% auto;
+}
+
+#loginFormContainer > input {
+    margin-top: 0px;
+}
+
+#loginFormContainer > button {
+    margin-top: 5%;
+}
+
+/* #loginFormContainer > * {
+    marg
+} */
+
+/* style={{width: "50%", alignItems: "end", justifyItems: "center"} */
+
+#loginContainer > img {
+    width: 40%;
+
+}
