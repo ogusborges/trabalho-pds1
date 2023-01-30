@@ -36,7 +36,7 @@ VALUES
 INSERT INTO trabalho.campos(cod_campo, titulo, descricao, tipo, obrigatorio, ordem, cod_formulario)
 VALUES
 	('possuiOutraGrad', 'Possui outra Graduação, mesmo incompleta?', null, 'combobox', true, 1, 2),
-	('cursaOuCursouGrad', 'Cursa ou cursou Pós-Graduação stricto sensu?', null, 'combobox', true, 2 2),
+	('cursaOuCursouGrad', 'Cursa ou cursou Pós-Graduação stricto sensu?', null, 'combobox', true, 2, 2),
 	('cursaOuCursouEspec', 'Cursa ou cursou Especialização?', null, 'combobox', true, 3, 2),
 	('formacaoTeorica', 'Acerca do curso oferecido, como você avalia a formação teórica?', null, 'combobox', true, 4, 2),
 	('formacaoPratica', 'Como você avalia a formação prática?', null, 'combobox', true, 5, 2),
