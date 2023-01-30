@@ -30,19 +30,20 @@ CREATE TABLE trabalho.respostas (
 
 INSERT INTO trabalho.formulario(titulo, data_ini, data_fim, descricao)
 VALUES
-	('Formulário de Egressos 2023', '2023-01-01', '2023-12-31 23:59:59', 'Formulário para coleta de dados de egressos em 2023');
+	('FormulÃ¡rio de Egressos 2022', '2022-01-01', '2022-12-31 23:59:59', 'FormulÃ¡rio para coleta de dados de egressos em 2022'),
+	('FormulÃ¡rio de Egressos 2023', '2023-01-01', '2023-12-31 23:59:59', 'FormulÃ¡rio para coleta de dados de egressos em 2023');
 	
 INSERT INTO trabalho.campos(cod_campo, titulo, descricao, tipo, obrigatorio, ordem, cod_formulario)
 VALUES
-	('possuiOutraGrad', 'Possui outra Graduação, mesmo incompleta?', null, 'combobox', true, 1, 2)
-	('cursaOuCursouGrad', 'Cursa ou cursou Pós-Graduação stricto sensu?', null, 'combobox', true, 2, 2)
-	('cursaOuCursouEspec', 'Cursa ou cursou Especialização?', null, 'combobox', true, 3, 2)
-	('formacaoTeorica', 'Acerca do curso oferecido, como você avalia a formação teórica?', null, 'combobox', true, 4, 2)
-	('formacaoPratica', 'Como você avalia a formação prática?', null, 'combobox', true, 5, 2)
-	('duracaoDoCurso', 'Como você avalia a duração do curso?', null, 'combobox', true, 6, 2)
-	('setorExercicio', 'Se você trabalha atualmente, qual o setor de exercício?', null, 'combobox', true, 7, 2)
-	('exerceQuantoTempo', 'A quanto tempo você trabalha?', null, 'combobox', true, 8, 2)
-	('vinculoTrabalho', 'Qual o seu vínculo de trabalho?', null, 'combobox', true, 9, 2)
-	('funcaoCargo', 'Você exerce qual função ou cargo?', null, 'combobox', true, 10, 2)
-	('relacaoFuncao', 'Qual a relação da função ou cargo com a formação realizada?', null, 'combobox', true, 11, 2)
-	('renda', 'Qual a sua renda ou salário mensal?', null, 'combobox', true, 12, 2);
+	('possuiOutraGrad', 'Possui outra GraduaÃ§Ã£o, mesmo incompleta?', null, 'combobox', true, 1, 2),
+	('cursaOuCursouGrad', 'Cursa ou cursou PÃ³s-GraduaÃ§Ã£o stricto sensu?', null, 'combobox', true, 2 2),
+	('cursaOuCursouEspec', 'Cursa ou cursou EspecializaÃ§Ã£o?', null, 'combobox', true, 3, 2),
+	('formacaoTeorica', 'Acerca do curso oferecido, como vocÃª avalia a formaÃ§Ã£o teÃ³rica?', null, 'combobox', true, 4, 2),
+	('formacaoPratica', 'Como vocÃª avalia a formaÃ§Ã£o prÃ¡tica?', null, 'combobox', true, 5, 2),
+	('duracaoDoCurso', 'Como vocÃª avalia a duraÃ§Ã£o do curso?', null, 'combobox', true, 6, 2),
+	('setorExercicio', 'Se vocÃª trabalha atualmente, qual o setor de exercÃ­cio?', null, 'combobox', true, 7, 2),
+	('exerceQuantoTempo', 'A quanto tempo vocÃª trabalha?', null, 'combobox', true, 8, 2),
+	('vinculoTrabalho', 'Qual o seu vÃ­nculo de trabalho?', null, 'combobox', true, 9, 2),
+	('funcaoCargo', 'VocÃª exerce qual funÃ§Ã£o ou cargo?', null, 'combobox', true, 10, 2),
+	('relacaoFuncao', 'Qual a relaÃ§Ã£o da funÃ§Ã£o ou cargo com a formaÃ§Ã£o realizada?', null, 'combobox', true, 11, 2),
+	('renda', 'Qual a sua renda ou salÃ¡rio mensal?', null, 'combobox', true, 12, 2);
