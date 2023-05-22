@@ -8,15 +8,15 @@ import org.springframework.lang.NonNull
 class Funcao(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private var id: Int,
+    var id: Int? = null,
 
     @NonNull
-    private var descricao: String,
+    var descricao: String = "",
 
     @NonNull
     @ManyToOne
     @JoinColumn(name = "pessoa_id")
-    private var pessoa: Pessoa,
+    var pessoa: Pessoa? = null,
 ) {
 
 }

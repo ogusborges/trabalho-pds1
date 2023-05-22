@@ -11,7 +11,6 @@ import java.util.Date
 class Pessoa(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     var id: Int? = null,
 
     @NonNull
@@ -21,25 +20,23 @@ class Pessoa(
     var sobrenome: String? = "",
 
     @NonNull
-    @Column(name = "email")
     var email: String = "",
 
-    @Column(name = "password")
     var senha: String = "",
 
     @NonNull
     @Column(name = "data_nasc")
     var dataNascimento: Date = Date(0),
 
-    @OneToMany
-    var contatos: List<Contato> = listOf(),
+    @OneToMany(cascade = arrayOf(CascadeType.ALL))
+    @JoinColumn(name = "pessoa_id")
+    var contatos: MutableList<Contato> = mutableListOf(),
+
+    @OneToMany(cascade = arrayOf(CascadeType.ALL))
+    var funcoes: MutableList<Funcao> = mutableListOf(),
 
     @NonNull
-    @OneToMany
-    var funcoes: List<Funcao> = listOf(),
-
-    @NonNull
-    var aceitouTermo: Boolean = false,
+    var aceitouTermos: Boolean = false,
 
     @NonNull
     var completouCadastro: Boolean = false,

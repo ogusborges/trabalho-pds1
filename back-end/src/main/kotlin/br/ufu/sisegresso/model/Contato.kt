@@ -10,16 +10,16 @@ import javax.annotation.processing.Generated
 class Contato(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private var id: Int,
+    var id: Int? = null,
 
     @NonNull
-    private var tipo: String,
+    var tipo: String = "",
 
     @NonNull
-    private var valor: String,
+    var valor: String = "",
 
     @ManyToOne
-    @JoinColumn(name = "pessoa_id")
-    private var pessoa: Pessoa
+    @JoinColumn(name = "pessoa_id", referencedColumnName = "id")
+    var pessoa: Pessoa? = null
 ) {
 }

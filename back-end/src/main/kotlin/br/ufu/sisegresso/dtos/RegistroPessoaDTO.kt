@@ -11,12 +11,13 @@ import org.springframework.lang.NonNull
 import java.util.Date
 
 data class RegistroPessoaDTO(
-    @NotBlank
-    val nome: String,
+    @field:NotBlank
+    val nome: String = "",
 
-    @NotBlank
-    val sobrenome: String,
+    @field:NotBlank
+    val sobrenome: String = "",
 
-    @Email
-    val email: String,
+    @field:NotBlank
+    @field:Email
+    val email: String = "",
 )
