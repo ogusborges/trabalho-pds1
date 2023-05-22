@@ -1,44 +1,30 @@
 {
-  "name": "front-end",
-  "version": "0.1.0",
+  "name": "sis_egressos_front_end",
+  "version": "0.0.0",
   "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "axios": "^1.2.4",
-    "bootstrap": "^5.2.3",
-    "prop-types": "^15.8.1",
-    "proptypes": "^1.1.0",
-    "react": "^18.2.0",
-    "react-bootstrap": "^2.7.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.8.0",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
-  },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test:unit": "vitest",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
+    "format": "prettier --write src/"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+  "dependencies": {
+    "pinia": "^2.0.36",
+    "vue": "^3.3.2",
+    "vue-router": "^4.2.0"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "devDependencies": {
+    "@rushstack/eslint-patch": "^1.2.0",
+    "@vitejs/plugin-vue": "^4.2.3",
+    "@vue/eslint-config-prettier": "^7.1.0",
+    "@vue/test-utils": "^2.3.2",
+    "eslint": "^8.39.0",
+    "eslint-plugin-vue": "^9.11.0",
+    "jsdom": "^22.0.0",
+    "prettier": "^2.8.8",
+    "vite": "^4.3.5",
+    "vitest": "^0.31.0"
   }
 }
