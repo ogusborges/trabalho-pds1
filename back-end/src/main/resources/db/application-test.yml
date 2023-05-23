@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    driver-class-name: 
+    url: 
+    username: 
+    password: 
+  test:
+    database:
+      replace: 
+  jpa:
+    show-sql:
+    properties:
+      hibernate:
+        format_sql:
+  flyway:
+    enabled:
+    driver-class-name:
+    url: 
+    user:
+    password: 
