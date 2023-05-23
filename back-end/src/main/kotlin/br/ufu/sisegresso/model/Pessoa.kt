@@ -28,11 +28,11 @@ class Pessoa(
     @Column(name = "data_nasc")
     var dataNascimento: Date = Date(0),
 
-    @OneToMany(cascade = arrayOf(CascadeType.ALL))
+    @OneToMany(cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
     @JoinColumn(name = "pessoa_id")
     var contatos: MutableList<Contato> = mutableListOf(),
 
-    @OneToMany(cascade = arrayOf(CascadeType.ALL))
+    @OneToMany(cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
     var funcoes: MutableList<Funcao> = mutableListOf(),
 
     @NonNull

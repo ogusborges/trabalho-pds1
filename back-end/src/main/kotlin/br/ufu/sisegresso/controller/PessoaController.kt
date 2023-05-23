@@ -8,9 +8,7 @@ import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
-import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.PatchMapping
-import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -42,14 +40,13 @@ class PessoaController(
         }
     }
 
-    @PatchMapping("{id}")
+    @PatchMapping("")
     @Transactional
     fun atualizarPessoa(
-        @Valid @PathVariable id: Int,
         @Valid @RequestBody dadosAtualizacao: AtualizacaoPessoaDTO
     ): ResponseEntity<Any> {
         try {
-            pessoaService.atualizar(id, dadosAtualizacao)
+            pessoaService.atualizar(dadosAtualizacao)
 
             return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
