@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import CadastroView from '../views/CadastroView.vue'
+import CadastroEgressoView from '../views/CadastroEgressoView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,7 +22,14 @@ const router = createRouter({
       path: '/interno/cadastro',
       name: 'Cadastrar Entidade',
       component: CadastroView
+    },
+    {
+      path: '/egresso/cadastro',
+      name: 'Cadastrar Egresso',
+      component: CadastroEgressoView
     }
+
+
   ]
 })
 
