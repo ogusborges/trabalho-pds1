@@ -1,0 +1,80 @@
+form {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: 0.6em 0px;
+}
+
+form > * {
+  margin: 1em 0;
+}
+
+.form-group {
+  border: #4b8af9 solid 1px;
+  border-radius: 0.3em;
+}
+
+.form-group > legend {
+  color: #4b8af9;
+  font-size: 1.7em;
+  padding: 0.5em;
+  font-weight: 600;
+}
+
+.grow-1 {
+  flex-grow: 1;
+}
+
+.grow-3 {
+  flex-grow: 3;
+}
+
+.grow-5 {
+  flex-grow: 5;
+}
+
+.form-field-group {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5em;
+}
+
+.form-field-group > .form-field-label {
+  font-size: 0.85em;
+  color: #737373;
+  margin-bottom: 0.6em;
+}
+
+.form-field-error {
+  font-size: 0.7em;
+  color: #c80000;
+  display: block;
+}
+
+input[type='text'],
+input[type='text']:focus,
+input[type='text']:focus-visible,
+input[type='text']:hover,
+input[type='password'],
+input[type='password']:focus,
+input[type='password']:focus-visible,
+input[type='password']:hover,
+input[type='date'],
+select {
+  background-color: #f3f3f3;
+  padding: 0.7em;
+  color: #737373;
+  width: 100%;
+  border: #e0e0e0 solid 1px;
+  border-radius: 0px;
+}
+
+.form-footer {
+  display: flex;
+  justify-content: end;
+  margin: 0 0;
+}
+
+.form-footer > * {
+  margin: 0.5em;
+}

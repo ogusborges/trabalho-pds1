@@ -1,5 +1,16 @@
 spring:
   datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/sisegresso
+    username: postgres
+    password: postgresgus
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+spring:
+  datasource:
     driver-class-name:
     url: 
     username: 
