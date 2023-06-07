@@ -1,7 +1,5 @@
 spring:
   datasource:
-<<<<<<< HEAD
-=======
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/sisegresso
     username: postgres
@@ -11,15 +9,3 @@ spring:
     properties:
       hibernate:
         format_sql: true
-spring:
-  datasource:
->>>>>>> main
-    driver-class-name:
-    url: 
-    username: 
-    password: 
-  jpa:
-    show-sql:
-    properties:
-      hibernate:
-        format_sql: 

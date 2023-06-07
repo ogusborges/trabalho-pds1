@@ -8,6 +8,7 @@ import br.ufu.sisegresso.model.Contato
 import br.ufu.sisegresso.model.Funcao
 import br.ufu.sisegresso.model.Pessoa
 import br.ufu.sisegresso.repository.PessoaRepository
+<<<<<<< HEAD
 import br.ufu.sisegresso.util.ReflectionUtils
 import br.ufu.sisegresso.util.TextUtil
 import org.springframework.data.repository.findByIdOrNull
@@ -22,6 +23,15 @@ import kotlin.reflect.jvm.isAccessible
 interface IPessoaService {
     fun cadastrar(dadosPessoa: RegistroPessoaDTO)
     fun atualizar(id: Int, dadosAtualizacao: AtualizacaoPessoaDTO)
+=======
+import br.ufu.sisegresso.util.TextUtil
+import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.stereotype.Service
+
+interface IPessoaService {
+    fun cadastrar(dadosPessoa: RegistroPessoaDTO)
+    fun atualizar(dadosAtualizacao: AtualizacaoPessoaDTO)
+>>>>>>> main
 }
 
 
@@ -50,8 +60,13 @@ class PessoaService(
         pessoaRepo.save(pessoa)
     }
 
+<<<<<<< HEAD
     override fun atualizar(id: Int, dadosAtualizacao: AtualizacaoPessoaDTO) {
         val pessoa: Pessoa? = pessoaRepo.findByIdOrNull(id)
+=======
+    override fun atualizar(dadosAtualizacao: AtualizacaoPessoaDTO) {
+        val pessoa: Pessoa? = pessoaRepo.findByEmail(dadosAtualizacao.email)
+>>>>>>> main
 
         if(pessoa == null) {
             throw ResourceNotFoundException(Messages.PESSOA_NOT_FOUND.name)

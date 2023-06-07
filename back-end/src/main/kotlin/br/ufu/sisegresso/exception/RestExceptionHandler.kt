@@ -60,6 +60,29 @@ class RestExceptionHandler {
             .body(responseBody)
     }
 
+<<<<<<< HEAD
+=======
+    @ExceptionHandler(ResourceNotFoundException::class)
+    fun resourceNotFoundException(exception: ResourceNotFoundException): ResponseEntity<RespostaHttp> {
+        val errorName = "resourceNotFoundException"
+
+        val error: Erro = Erro(
+            nome = errorName,
+            mensagem = exception.message ?: ""
+        )
+
+        val responseBody = RespostaHttp(
+            status = HttpStatus.BAD_REQUEST.value(),
+            errorCount = 1,
+            errors = listOf(error)
+        )
+
+        return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(responseBody)
+    }
+
+>>>>>>> main
     @ExceptionHandler(MethodArgumentNotValidException::class)
     fun methodArgumentNotValidExceptionHandler(exception: MethodArgumentNotValidException): ResponseEntity<RespostaHttp> {
         val fieldErrors = exception.bindingResult.getFieldErrors()
