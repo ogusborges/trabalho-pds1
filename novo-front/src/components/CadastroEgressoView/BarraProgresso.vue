@@ -1,7 +1,9 @@
 <script setup lang="ts">
+
 // import type { ValidationError } from '@/service/RequestResponse'
 // import { useEntityStore } from '@/stores/EntityRegister'
 // import { onMounted, type PropType, ref, watch } from 'vue'
+
 
 // const props = defineProps({
 //   errors: {
@@ -20,50 +22,53 @@
 // )
 
 // const infoEgresso = useEntityStore().infoEgresso
+
+
 </script>
+
+
 
 <template>
   <fieldset class="form-group" id="field">
     <div id="informacoes-progresso">
       <div class="borda">
-
       </div>
-      <div id="etapa1">
-      </div>
-      <div class="barra">
-      </div>
-      <div id="etapa2">
+      <div id="etapa1" class="etapa">
       </div>
       <div class="barra">
       </div>
-      <div id="etapa3">
+      <div id="etapa2" class="etapa">
       </div>
       <div class="barra">
       </div>
-      <div id="etapa4">
+      <div id="etapa3" class="etapa">
       </div>
       <div class="barra">
       </div>
-      <div id="etapa5">
+      <div id="etapa4" class="etapa">
+      </div>
+      <div class="barra">
+      </div>
+      <div id="etapa5" class="etapa">
       </div> 
       <div class="borda">
 
       </div>     
     </div>
     <div id="texto-informacoes-progresso">
-        <div id="texto1">
+        <div id="texto1" class="texto">
             <span>Esclarecimentos</span>
         </div>
-        <div id="texto2">
+        <div id="texto2" class="texto">
             <span>Termo de consentimento</span>
         </div>
-        <div id="texto3">
+        <div id="texto3" class="texto">
             <span>Informações Pessoais</span>
         </div>
-        <div id="texto4">
+        <div id="texto4" class="texto">
             <span>Informações Profissionais</span>
         </div>
-        <div id="texto5">
+        <div id="texto5" class="texto">
             <span>Informações Acadêmicas</span>
         </div>                                
     </div>
@@ -86,44 +91,35 @@
     width: 1vw;
 }
 
-#texto1{
-  grid-column-start: 1;
-  grid-column-end: 2;
+.texto{
   grid-row: 1 / 1;
   text-align: center;
   text-size-adjust: 50%;
+}
+
+#texto1{
+  grid-column-start: 1;
+  grid-column-end: 2;
 }
 
 #texto2{
   grid-column-start: 3;
   grid-column-end: 4;
-  grid-row: 1 / 1;
-  text-align: center;
-  text-size-adjust: 50%;
 }
 
 #texto3{
   grid-column-start: 5;
   grid-column-end: 6;
-  grid-row: 1 / 1;
-  text-align: center;
-  text-size-adjust: 50%;
 }
 
 #texto4{
   grid-column-start: 7;
   grid-column-end: 8;
-  grid-row: 1 / 1;
-  text-align: center;
-  text-size-adjust: 50%;
 }
 
 #texto5{
   grid-column-start: 9;
   grid-column-end: 10;
-  grid-row: 1 / 1;
-  text-align: center;
-  text-size-adjust: 50%;
 }
 
 #informacoes-progresso {
@@ -138,7 +134,7 @@
 }
 
 #field{
-    border: none;
+  border: none;
 }
 
 #etapa1 {
@@ -159,40 +155,31 @@
   height: 5%;
 }
 
+.etapa{
+  width: 3vw;
+  height: 3vw;
+  border-radius: 50%;
+  border-color: rgb(68, 154, 224);
+  border-style: solid;
+}
+
 #etapa2 {
   grid-column: 4 / 4;
   background-color: rgb(141, 142, 235);
-  width: 3vw;
-  height: 3vw;
-  border-radius: 50%;
-  border-color: rgb(68, 154, 224);
-  border-style: solid;
 }
+
 #etapa3 {
   grid-column: 6 / 6;
   background-color: rgb(240, 240, 240);
-  width: 3vw;
-  height: 3vw;
-  border-radius: 50%;
-  border-color: rgb(68, 154, 224);
-  border-style: solid;
 }
+
 #etapa4 {
   grid-column: 8 / 8;
   background-color: rgb(240, 240, 240);
-  width: 3vw;
-  height: 3vw;
-  border-radius: 50%;
-  border-color: rgb(68, 154, 224);
-  border-style: solid;
 }
+
 #etapa5 {
   grid-column: 10 / 10;
   background-color: rgb(240, 240, 240);
-  width: 3vw;
-  height: 3vw;
-  border-radius: 50%;
-  border-color: rgb(68, 154, 224);
-  border-style: solid;
 }
 </style>

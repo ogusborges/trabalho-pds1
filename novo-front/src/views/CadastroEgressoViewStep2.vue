@@ -12,7 +12,7 @@ import Modal from '@/components/Modal.vue'
 // import type { SendEntityInfo } from '@/service/EntityService'
 
 import { ref } from 'vue'
-import Esclarecimentos from '@/components/CadastroEgressoView/Esclarecimentos.vue'
+import TermoConsentimento from '@/components/CadastroEgressoView/TermoConsentimento.vue'
 import BarraProgresso from '@/components/CadastroEgressoView/BarraProgresso.vue'
 // import InformacoesEgresso from '@/components/CadastroView/InformacoesEgresso.vue'
 // import { EntityValidationException } from '@/exception/EntityValidationException'
@@ -112,7 +112,7 @@ const enviarDados = async (_: Event) => {
     <AppHeader />
     <main id="cadastrar-container">
       
-      <h1 class="container-title">Esclarecimentos</h1>
+      <h1 class="container-title">Termo de Consentimento</h1>
       <transition name="modal">
         <Modal v-if="showModal" @close="showModal = false">
           <template v-slot:header>
@@ -127,10 +127,10 @@ const enviarDados = async (_: Event) => {
       <BarraProgresso v-bind:errors="[]"/>
       <form @submit.prevent="enviarDados">
         
-        <Esclarecimentos v-bind:errors="[]" />
+        <TermoConsentimento v-bind:errors="[]" />
         <!-- <InformacoesEgresso v-bind:errors="egressoValidationErrors ?? []" v-if="isEgresso()" /> -->
         <div id="form-button-container">
-          <button class="button-primary" type="submit">Enviar</button>
+          <button class="button-primary" type="button">Ver Termo</button>
           <button class="button-secondary" type="reset">
           <!-- <button class="button-secondary" type="reset" v-on:click.stop="resetFormFields"> -->
             Avançar
@@ -184,4 +184,5 @@ const enviarDados = async (_: Event) => {
   width: 100%;
   flex-direction: column;
 }
+
 </style>
