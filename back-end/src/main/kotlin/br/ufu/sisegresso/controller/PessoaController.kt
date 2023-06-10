@@ -23,36 +23,14 @@ import org.springframework.web.bind.annotation.RestController
 class PessoaController(
     private val pessoaService: IPessoaService
 ) {
-
-    @PostMapping("")
-    @Transactional
-    fun cadastrarPessoa(
-        @Valid @RequestBody dadosPessoa: RegistroPessoaDTO
-    ): ResponseEntity<Any> {
-        try {
-            pessoaService.cadastrar(dadosPessoa)
-
-            return ResponseEntity
-                .status(HttpStatus.NO_CONTENT)
-                .build()
-        } catch (exception: Exception) {
-            throw exception
-        }
-    }
-
     @PatchMapping("")
-    @Transactional
     fun atualizarPessoa(
         @Valid @RequestBody dadosAtualizacao: AtualizacaoPessoaDTO
     ): ResponseEntity<Any> {
-        try {
-            pessoaService.atualizar(dadosAtualizacao)
+        pessoaService.atualizar(dadosAtualizacao)
 
-            return ResponseEntity
-                .status(HttpStatus.NO_CONTENT)
-                .build()
-        } catch(exception: Exception) {
-            throw exception
-        }
+        return ResponseEntity
+            .status(HttpStatus.NO_CONTENT)
+            .build()
     }
 }
