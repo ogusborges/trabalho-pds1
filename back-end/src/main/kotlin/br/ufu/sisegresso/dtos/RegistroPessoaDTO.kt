@@ -1,6 +1,9 @@
 package br.ufu.sisegresso.dtos
 
 import br.ufu.sisegresso.messages.Messages
+import br.ufu.sisegresso.model.Role
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
 import jakarta.persistence.Temporal
 import jakarta.persistence.TemporalType
 import jakarta.validation.constraints.Email
@@ -20,4 +23,9 @@ data class RegistroPessoaDTO(
     @field:NotBlank
     @field:Email
     val email: String = "",
+
+
+    @field:NonNull
+    @field:Enumerated(EnumType.ORDINAL)
+    val role: Role? = null,
 )
