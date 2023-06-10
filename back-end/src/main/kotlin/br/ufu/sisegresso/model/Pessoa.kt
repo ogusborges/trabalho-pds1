@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails
 import java.util.Date
 
 @Entity
-@Table(name = "pessoa", schema = "system")
+@Table(name = "pessoa")
 class Pessoa(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,15 +32,10 @@ class Pessoa(
     @JoinColumn(name = "pessoa_id")
     var contatos: MutableList<Contato> = mutableListOf(),
 
-    @OneToMany(cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
-    var funcoes: MutableList<Funcao> = mutableListOf(),
+    @Enumerated(EnumType.ORDINAL)
+    var role: Role? = null,
 
-    @NonNull
-    var aceitouTermos: Boolean = false,
-
-    @NonNull
-    var completouCadastro: Boolean = false,
-) : UserDetails {
+    ) : UserDetails {
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
         TODO("Not yet implemented")

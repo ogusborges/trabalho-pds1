@@ -4,20 +4,19 @@ import br.ufu.sisegresso.dtos.AtualizacaoPessoaDTO
 import br.ufu.sisegresso.dtos.RegistroPessoaDTO
 import br.ufu.sisegresso.exception.*
 import br.ufu.sisegresso.messages.Messages
+import br.ufu.sisegresso.messages.PessoaMessage
 import br.ufu.sisegresso.model.Contato
-import br.ufu.sisegresso.model.Funcao
 import br.ufu.sisegresso.model.Pessoa
 import br.ufu.sisegresso.repository.PessoaRepository
 import br.ufu.sisegresso.util.TextUtil
+import jakarta.transaction.Transactional
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
 interface IPessoaService {
-    fun cadastrar(dadosPessoa: RegistroPessoaDTO)
+    fun cadastrar(dadosPessoa: RegistroPessoaDTO): Pessoa
     fun atualizar(dadosAtualizacao: AtualizacaoPessoaDTO)
 }
-
-
 
 @Service
 class PessoaService(
@@ -25,9 +24,14 @@ class PessoaService(
     private val passwordEncoder: PasswordEncoder
 ) : IPessoaService {
 
-    override fun cadastrar(dadosPessoa: RegistroPessoaDTO) {
-        if(pessoaRepo.existsPessoaByEmail(dadosPessoa.email)) {
-            throw ResourceAlreadyExistsException(Messages.PESSOA_ALREADY_EXISTS.name)
+    @Transactional
+    override fun cadastrar(dadosPessoa: RegistroPessoaDTO): Pessoa {
+        println(pessoaRepo.existsPessoaByEmail(dadosPessoa.email))
+        if (pessoaRepo.existsPessoaByEmail(dadosPessoa.email)) {
+            throw ResourceAlreadyExistsException(
+                PessoaMessage.PESSOA_ALREADY_EXISTS.name,
+                PessoaMessage.PESSOA_ALREADY_EXISTS.message
+            )
         }
 
         val senhaPadrao = TextUtil.generateRandomString()
@@ -40,14 +44,18 @@ class PessoaService(
             senha = passwordEncoder.encode(senhaPadrao)
         }
 
-        pessoaRepo.save(pessoa)
+        return pessoaRepo.save(pessoa)
     }
 
+    @Transactional
     override fun atualizar(dadosAtualizacao: AtualizacaoPessoaDTO) {
         val pessoa: Pessoa? = pessoaRepo.findByEmail(dadosAtualizacao.email)
 
-        if(pessoa == null) {
-            throw ResourceNotFoundException(Messages.PESSOA_NOT_FOUND.name)
+        if (pessoa == null) {
+            throw ResourceNotFoundException(
+                PessoaMessage.PESSOA_NOT_FOUND.name,
+                PessoaMessage.PESSOA_NOT_FOUND.message
+            )
         }
 
         pessoa.apply {
@@ -59,8 +67,6 @@ class PessoaService(
             }
 
             dataNascimento = dadosAtualizacao.dataNascimento ?: dataNascimento
-            aceitouTermos = dadosAtualizacao.aceitouTermos ?: aceitouTermos
-            completouCadastro = dadosAtualizacao.completouCadastro ?: completouCadastro
         }
 
         if(dadosAtualizacao.contatos != null) {
@@ -84,16 +90,19 @@ class PessoaService(
 
                     contatos.add(contato)
                 } else {
-                    var contato = contatos.find { it.id == contatoInfo.id }
+                    val contato = contatos.find { it.id == contatoInfo.id }
 
                     if (contato == null) {
-                        throw ResourceNotFoundException(Messages.CONTACT_NOT_FOUND.name)
+                        throw ResourceNotFoundException(
+                            PessoaMessage.CONTACT_NOT_FOUND.name,
+                            PessoaMessage.CONTACT_NOT_FOUND.message
+                        )
                     }
 
                     if (contatoInfo.tipo == null && contatoInfo.valor == null) {
                         contatos.remove(contato)
                     } else {
-                        contato = contato.apply {
+                        contato.apply {
                             tipo = contatoInfo.tipo ?: tipo
                             valor = contatoInfo.valor ?: valor
                         }
@@ -102,41 +111,6 @@ class PessoaService(
             }
 
             pessoa.contatos = contatos
-        }
-
-        if(dadosAtualizacao.funcao != null) {
-            val funcoes: MutableList<Funcao> = pessoa.funcoes
-
-            for(funcaoInfo in dadosAtualizacao.funcao) {
-                if(funcaoInfo.id == null) {
-                    if(funcaoInfo.descricao == null) {
-                        throw ResourceAttributeInvalidException(Messages.ROLE_DESCRIPTION_REQUIRED.name)
-                    }
-
-                    val funcao: Funcao = Funcao().apply {
-                        descricao = funcaoInfo.descricao
-                        this.pessoa = pessoa
-                    }
-
-                    funcoes.add(funcao)
-                } else {
-                    var funcao = funcoes.find { it.id == funcaoInfo.id }
-
-                    if (funcao == null) {
-                        throw ResourceNotFoundException(Messages.ROLE_NOT_FOUND.name)
-                    }
-
-                    if(funcaoInfo.descricao == null) {
-                        funcoes.remove(funcao)
-                    } else {
-                        funcao = funcao.apply {
-                            descricao = funcaoInfo.descricao
-                        }
-                    }
-                }
-            }
-
-            pessoa.funcoes = funcoes
         }
 
         pessoaRepo.save(pessoa)
