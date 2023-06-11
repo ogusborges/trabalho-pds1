@@ -2,8 +2,11 @@ package br.ufu.sisegresso.service
 
 import br.ufu.sisegresso.dtos.AtualizacaoPessoaDTO
 import br.ufu.sisegresso.dtos.RegistroPessoaDTO
-import br.ufu.sisegresso.exception.*
-import br.ufu.sisegresso.messages.Messages
+import br.ufu.sisegresso.exception.ResourceAlreadyExistsException
+import br.ufu.sisegresso.exception.ResourceAttributeInvalidException
+import br.ufu.sisegresso.exception.ResourceNotFoundException
+import br.ufu.sisegresso.exception.ServiceInternalError
+import br.ufu.sisegresso.messages.AppMessages
 import br.ufu.sisegresso.messages.PessoaMessage
 import br.ufu.sisegresso.model.Contato
 import br.ufu.sisegresso.model.Pessoa
@@ -35,7 +38,7 @@ class PessoaService(
         }
 
         val senhaPadrao = TextUtil.generateRandomString()
-            ?: throw ServiceInternalError(Messages.DFT_PASSWORD_GENERATION_ERROR.name)
+            ?: throw ServiceInternalError(AppMessages.DFT_PASSWORD_GENERATION_ERROR.name)
 
         val pessoa = Pessoa().apply {
             email = dadosPessoa.email
@@ -75,11 +78,17 @@ class PessoaService(
             for(contatoInfo in dadosAtualizacao.contatos) {
                 if (contatoInfo.id == null) {
                     if (contatoInfo.tipo == null) {
-                        throw ResourceAttributeInvalidException(Messages.CONTACT_TYPE_REQUIRED.name)
+                        throw ResourceAttributeInvalidException(
+                            PessoaMessage.CONTACT_TYPE_REQUIRED.name,
+                            PessoaMessage.CONTACT_TYPE_REQUIRED.message
+                        )
                     }
 
                     if (contatoInfo.valor == null) {
-                        throw ResourceAttributeInvalidException(Messages.CONTACT_VALUE_REQUIRED.name)
+                        throw ResourceAttributeInvalidException(
+                            PessoaMessage.CONTACT_VALUE_REQUIRED.name,
+                            PessoaMessage.CONTACT_VALUE_REQUIRED.message
+                        )
                     }
 
                     val contato: Contato = Contato().apply {

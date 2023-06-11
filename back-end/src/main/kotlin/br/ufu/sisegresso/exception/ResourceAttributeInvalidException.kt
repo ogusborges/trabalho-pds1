@@ -1,4 +1,6 @@
 package br.ufu.sisegresso.exception
 
-class ResourceAttributeInvalidException(message: String): Exception(message) {
-}
+class ResourceAttributeInvalidException(
+    val name: String,
+    message: String,
+): RuntimeException(message)
