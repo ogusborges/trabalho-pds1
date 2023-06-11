@@ -6,20 +6,20 @@ import org.springframework.lang.NonNull
 import javax.annotation.processing.Generated
 
 @Entity
-@Table(name = "contato", schema = "system")
+@Table(name = "contato")
 class Contato(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Int? = null,
 
     @NonNull
-    var tipo: String = "",
+    @Enumerated(EnumType.ORDINAL)
+    var tipo: TipoContato? = null,
 
     @NonNull
     var valor: String = "",
 
     @ManyToOne
     @JoinColumn(name = "pessoa_id", referencedColumnName = "id")
-    var pessoa: Pessoa? = null
-) {
-}
+    var pessoa: Pessoa? = null,
+)

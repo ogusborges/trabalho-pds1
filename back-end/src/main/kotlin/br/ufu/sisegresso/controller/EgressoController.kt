@@ -1,9 +1,8 @@
 package br.ufu.sisegresso.controller
 
-import br.ufu.sisegresso.dtos.AtualizacaoPessoaDTO
-import br.ufu.sisegresso.dtos.RegistroPessoaDTO
-import br.ufu.sisegresso.service.IPessoaService
-import jakarta.transaction.Transactional
+import br.ufu.sisegresso.dtos.AtualizacaoEgressoDTO
+import br.ufu.sisegresso.dtos.CadastroEgressoDTO
+import br.ufu.sisegresso.service.IEgressoService
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
@@ -16,18 +15,29 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping(
-    path = arrayOf("/pessoa"),
+    path = arrayOf("/egresso"),
     consumes = arrayOf(MediaType.APPLICATION_JSON_VALUE),
     produces = arrayOf(MediaType.APPLICATION_JSON_VALUE),
 )
-class PessoaController(
-    private val pessoaService: IPessoaService
+class EgressoController(
+    private val egressoService: IEgressoService
 ) {
-    @PatchMapping("")
-    fun atualizarPessoa(
-        @Valid @RequestBody dadosAtualizacao: AtualizacaoPessoaDTO
+    @PostMapping("")
+    fun cadastrarEgresso(
+        @Valid @RequestBody dadosEgresso: CadastroEgressoDTO,
     ): ResponseEntity<Any> {
-        pessoaService.atualizar(dadosAtualizacao)
+        egressoService.cadastrarEgresso(dadosEgresso)
+
+        return ResponseEntity
+            .status(HttpStatus.NO_CONTENT)
+            .build()
+    }
+
+    @PatchMapping
+    fun atualizarEgresso(
+        @Valid @RequestBody dadosAtualizacao: AtualizacaoEgressoDTO,
+    ): ResponseEntity<Any> {
+        egressoService.atualizarEgresso(dadosAtualizacao)
 
         return ResponseEntity
             .status(HttpStatus.NO_CONTENT)

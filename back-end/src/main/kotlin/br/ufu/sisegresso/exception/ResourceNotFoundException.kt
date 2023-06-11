@@ -1,4 +1,7 @@
 package br.ufu.sisegresso.exception
 
-class ResourceNotFoundException(message: String): Exception(message) {
+class ResourceNotFoundException(
+    val name: String,
+    message: String
+): RuntimeException(message) {
 }

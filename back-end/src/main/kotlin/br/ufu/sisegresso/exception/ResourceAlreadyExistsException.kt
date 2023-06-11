@@ -1,4 +1,6 @@
 package br.ufu.sisegresso.exception
 
-class ResourceAlreadyExistsException(message: String) : Exception(message) {
-}
+class ResourceAlreadyExistsException(
+    val name: String,
+    message: String,
+) : RuntimeException(message)

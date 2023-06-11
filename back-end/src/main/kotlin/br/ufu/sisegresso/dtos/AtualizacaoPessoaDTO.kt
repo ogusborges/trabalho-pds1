@@ -1,18 +1,20 @@
 package br.ufu.sisegresso.dtos
 
-import br.ufu.sisegresso.model.Contato
-import br.ufu.sisegresso.model.Funcao
+import br.ufu.sisegresso.model.Role
+import br.ufu.sisegresso.model.TipoContato
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
 import jakarta.persistence.Temporal
 import jakarta.persistence.TemporalType
-import jakarta.validation.Valid
 import jakarta.validation.constraints.Email
+import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.Null
 import jakarta.validation.constraints.Past
 import org.springframework.format.annotation.DateTimeFormat
-import org.springframework.lang.NonNull
 import java.util.*
 
 data class AtualizacaoPessoaDTO(
-    @field:NonNull
+    @field:NotBlank
     @field:Email
     val email: String,
 
@@ -27,11 +29,9 @@ data class AtualizacaoPessoaDTO(
     @field:Temporal(TemporalType.DATE)
     val dataNascimento: Date?,
 
-    val aceitouTermos: Boolean?,
-
-    val completouCadastro: Boolean?,
-
     val contatos: List<ContatoDTO>?,
 
-    val funcao: List<FuncaoDTO>?
+    @field:Null
+    @field:Enumerated(EnumType.ORDINAL)
+    val role: Role?,
 )
