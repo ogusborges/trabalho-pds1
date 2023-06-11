@@ -1,4 +1,4 @@
-CREATE TABLE system.contato (
+CREATE TABLE ${flyway:defaultSchema}.contato (
     id SERIAL PRIMARY KEY,
     pessoa_id integer,
     tipo varchar(20) NOT NULL,
@@ -6,5 +6,5 @@ CREATE TABLE system.contato (
 
     CONSTRAINT fk_pessoa
     FOREIGN KEY (pessoa_id)
-    REFERENCES system.pessoa (id) ON DELETE CASCADE
+    REFERENCES ${flyway:defaultSchema}.pessoa (id) ON DELETE CASCADE
 )
