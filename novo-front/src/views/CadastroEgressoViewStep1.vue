@@ -1,23 +1,22 @@
 <script setup lang="ts">
-import AppHeader from '@/components/AppHeader.vue'
+import { useEgressoRegisterStore } from '@/stores/EgressoRegister'
+
+import { onBeforeMount, ref } from 'vue'
 
 import '@/assets/button.css'
 
-import entityService from '../service/EntityService'
-import { useEntityStore } from '@/stores/EntityRegister'
-import Modal from '@/components/Modal.vue'
-
-// import { isApiError, isFieldValidationError, type ValidationError } from '@/service/RequestResponse'
-
-// import type { SendEntityInfo } from '@/service/EntityService'
-
-import { ref } from 'vue'
 import Esclarecimentos from '@/components/CadastroEgressoView/Esclarecimentos.vue'
 import BarraProgresso from '@/components/CadastroEgressoView/BarraProgresso.vue'
-// import InformacoesEgresso from '@/components/CadastroView/InformacoesEgresso.vue'
-// import { EntityValidationException } from '@/exception/EntityValidationException'
+import AppHeader from '@/components/AppHeader.vue'
+import Modal from '@/components/Modal.vue'
+import router from '@/router'
 
-const entityStore = useEntityStore()
+
+const stepOneData = useEgressoRegisterStore().stepOne
+
+
+
+
 const showModal = ref(false)
 
 const modalMessage = ref('')
@@ -25,6 +24,12 @@ const modalTitle = ref('')
 
 // let pessoalValidationErrors = ref<ValidationError[] | undefined>()
 // let egressoValidationErrors = ref<ValidationError[] | undefined>()
+
+onBeforeMount(() => {
+  if(stepOneData.completed == true) {
+    router.push('/egresso/cadastro/step/2')
+  }
+})
 
 const enviarDados = async (_: Event) => {
 //   let sendEntityInfo: SendEntityInfo = {
@@ -124,7 +129,7 @@ const enviarDados = async (_: Event) => {
         </Modal>
       </transition>
 
-      <BarraProgresso v-bind:errors="[]"/>
+      <BarraProgresso :completed="[3,4]" :active="0"/>
       <form @submit.prevent="enviarDados">
         
         <Esclarecimentos v-bind:errors="[]" />

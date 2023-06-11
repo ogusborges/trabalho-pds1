@@ -1,29 +1,29 @@
 <script setup lang="ts">
+import { type PropType } from 'vue';
 
-// import type { ValidationError } from '@/service/RequestResponse'
-// import { useEntityStore } from '@/stores/EntityRegister'
-// import { onMounted, type PropType, ref, watch } from 'vue'
+const props = defineProps({
+  completed: {
+    type: Object as PropType<number[]>,
+    required: true
+  },
+  active: {
+    type: Object as PropType<number>,
+    required: true
+  }
+})
 
+const STEP_NUMBER = 5
+const stepElements = Array<String[]>(STEP_NUMBER)
 
-// const props = defineProps({
-//   errors: {
-//     type: Object as PropType<ValidationError[]>,
-//     required: true
-//   }
-// })
-
-// const showMatriculaError = ref<Boolean>(false)
-
-// watch(
-//   () => props.errors,
-//   (newValue: ValidationError[], _) => {
-//     showMatriculaError.value = newValue.length > 0 && newValue[0].result
-//   }
-// )
-
-// const infoEgresso = useEntityStore().infoEgresso
-
-
+for(let i = 0; i < STEP_NUMBER; i++) {
+  if(props.completed.includes(i)) {
+    stepElements[i] = ['etapa', 'etapa-completa']
+  } else if(i == props.active) {
+    stepElements[i] = ['etapa', 'etapa-ativa']
+  } else {
+    stepElements[i] = ['etapa']
+  }
+}
 </script>
 
 
@@ -33,23 +33,23 @@
     <div id="informacoes-progresso">
       <div class="borda">
       </div>
-      <div id="etapa1" class="etapa">
+      <div id="etapa1" :class="stepElements[0]">
       </div>
       <div class="barra">
       </div>
-      <div id="etapa2" class="etapa">
+      <div id="etapa2" :class="stepElements[1]">
       </div>
       <div class="barra">
       </div>
-      <div id="etapa3" class="etapa">
+      <div id="etapa3" :class="stepElements[2]">
       </div>
       <div class="barra">
       </div>
-      <div id="etapa4" class="etapa">
+      <div id="etapa4" :class="stepElements[3]">
       </div>
       <div class="barra">
       </div>
-      <div id="etapa5" class="etapa">
+      <div id="etapa5" :class="stepElements[4]">
       </div> 
       <div class="borda">
 
@@ -138,15 +138,22 @@
 }
 
 #etapa1 {
-
   grid-column: 2 / 2;
   grid-row: 1 / 1;
-  background-color: rgb(141, 235, 177);
   width: 3vw;
   height: 3vw;
+}
+
+.etapa-completa {
+  background-color: rgb(141, 235, 177) !important;
   border-radius: 50%;
   border-color: rgb(68, 154, 224);
   border-style: solid;
+}
+
+.etapa-ativa {
+  background-color: rgb(141, 142, 235) !important;
+  
 }
 
 .barra{
@@ -161,11 +168,12 @@
   border-radius: 50%;
   border-color: rgb(68, 154, 224);
   border-style: solid;
+  background-color: rgb(240, 240, 240);
 }
 
 #etapa2 {
   grid-column: 4 / 4;
-  background-color: rgb(141, 142, 235);
+  
 }
 
 #etapa3 {
