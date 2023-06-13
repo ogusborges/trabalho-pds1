@@ -58,6 +58,9 @@ class TokenServiceTest(
         val egresso: Egresso = Fixture.from(Egresso::class.java)
             .gimme("validEgresso")
 
+        val token: Token = Fixture.from(Token::class.java)
+            .gimme("validToken");
+
         val argCaptor: ArgumentCaptor<Token> = ArgumentCaptor.forClass(Token::class.java)
 
         Mockito.`when`(tokenRepo.existsByEgressoMatricula(Mockito.anyString()))
@@ -67,6 +70,9 @@ class TokenServiceTest(
         Mockito.`when`(tokenRepo.existsByToken(Mockito.anyString()))
             .thenReturn(true)
             .thenReturn(false)
+
+        Mockito.`when`(tokenRepo.save(Mockito.any(Token::class.java)))
+            .thenReturn(token)
 
         underTest.criarToken(CriarTokenDTO(egresso))
 

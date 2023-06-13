@@ -21,7 +21,7 @@ import java.time.ZoneOffset
 import java.util.*
 
 interface ITokenService {
-    fun criarToken(dadosToken: CriarTokenDTO)
+    fun criarToken(dadosToken: CriarTokenDTO): TokenDTO
     fun recuperarToken(token: String): TokenDTO
     fun regenerarToken(dadosToken: RegenerarTokenDTO)
 }
@@ -33,7 +33,7 @@ class TokenService(
     private final val tokenExpirationDays = 30L
 
     @Transactional
-    override fun criarToken(dadosToken: CriarTokenDTO) {
+    override fun criarToken(dadosToken: CriarTokenDTO): TokenDTO {
         if (tokenRepo.existsByEgressoMatricula(dadosToken.egresso.matricula!!)) {
             throw ResourceAlreadyExistsException(
                 TokenMessage.TOKEN_ALREADY_EXISTS.name,
@@ -62,7 +62,13 @@ class TokenService(
             dataExpiracao = dataExpiracao
         )
 
-        tokenRepo.save(token)
+        val savedToken = tokenRepo.save(token)
+
+        return TokenDTO(
+            token = savedToken.token,
+            dataExpiracao = savedToken.dataExpiracao,
+            expirado = savedToken.expirado
+        )
     }
 
     override fun recuperarToken(token: String): TokenDTO {
