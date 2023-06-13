@@ -9,3 +9,27 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        default_schema: dev
+  flyway:
+    enabled: true
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/sisegresso
+    user: postgres
+    password: postgresgus
+    schemas: dev
+  mail:
+    username: ogusborges@outlook.com
+    password: C412f5bb
+    host: smtp-mail.outlook.com
+    port: 587
+
+    properties:
+      mail:
+        protocol: smtp
+        tls: true
+        smtp:
+          auth: true
+          ssl:
+            trust: smtp-mail.outlook.com
+          starttls:
+            enable: true
