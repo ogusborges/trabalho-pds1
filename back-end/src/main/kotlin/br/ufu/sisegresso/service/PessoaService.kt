@@ -45,6 +45,7 @@ class PessoaService(
             nome = dadosPessoa.nome
             sobrenome = dadosPessoa.sobrenome
             senha = passwordEncoder.encode(senhaPadrao)
+            role = dadosPessoa.role
         }
 
         return pessoaRepo.save(pessoa)

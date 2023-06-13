@@ -1,16 +1,10 @@
 package br.ufu.sisegresso.service
 
-import br.ufu.sisegresso.dtos.AtualizacaoEgressoDTO
-import br.ufu.sisegresso.dtos.CadastroEgressoDTO
-import br.ufu.sisegresso.dtos.CriarTokenDTO
-import br.ufu.sisegresso.dtos.RegistroPessoaDTO
+import br.ufu.sisegresso.dtos.*
 import br.ufu.sisegresso.exception.ResourceAlreadyExistsException
 import br.ufu.sisegresso.exception.ResourceNotFoundException
 import br.ufu.sisegresso.messages.EgressoMessage
-import br.ufu.sisegresso.model.Egresso
-import br.ufu.sisegresso.model.Escolaridade
-import br.ufu.sisegresso.model.ExperienciaProfissional
-import br.ufu.sisegresso.model.Pessoa
+import br.ufu.sisegresso.model.*
 import br.ufu.sisegresso.repository.EgressoRepository
 import br.ufu.sisegresso.repository.PessoaRepository
 import jakarta.transaction.Transactional
@@ -28,6 +22,7 @@ class EgressoService(
     private val pessoaService: IPessoaService,
     private val egressoRepo: EgressoRepository,
     private val tokenService: ITokenService,
+    private val emailService: EmailService,
 ): IEgressoService{
 
     @Transactional
@@ -45,7 +40,8 @@ class EgressoService(
             val dadosPessoa = RegistroPessoaDTO(
                 email = dadosEgresso.email,
                 nome = dadosEgresso.nome!!,
-                sobrenome = dadosEgresso.sobrenome!!
+                sobrenome = dadosEgresso.sobrenome!!,
+                role = Role.EGRESSO
             )
 
             pessoa = pessoaService.cadastrar(dadosPessoa)
@@ -58,7 +54,15 @@ class EgressoService(
 
         egresso = egressoRepo.save(egresso)
 
-        tokenService.criarToken(CriarTokenDTO(egresso))
+        val token = tokenService.criarToken(CriarTokenDTO(egresso))
+
+        emailService.sendEmail(
+            EmailDTO(
+                subject = "Cadastro - Sistema de Monitoramento de Egressos",
+                messageBody = "Esse é seu token: ${token.token} e expira em ${token.dataExpiracao}",
+                recipient = pessoa.email
+            )
+        )
 
         return egresso
     }
