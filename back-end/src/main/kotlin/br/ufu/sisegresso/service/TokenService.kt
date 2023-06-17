@@ -21,9 +21,9 @@ import java.time.ZoneOffset
 import java.util.*
 
 interface ITokenService {
-    fun criarToken(dadosToken: CriarTokenDTO): TokenDTO
-    fun recuperarToken(token: String): TokenDTO
-    fun regenerarToken(dadosToken: RegenerarTokenDTO)
+    fun criar(dadosToken: CriarTokenDTO): TokenDTO
+    fun recuperar(token: String): TokenDTO
+    fun regenerar(dadosToken: RegenerarTokenDTO)
 }
 
 @Service
@@ -33,7 +33,7 @@ class TokenService(
     private final val tokenExpirationDays = 30L
 
     @Transactional
-    override fun criarToken(dadosToken: CriarTokenDTO): TokenDTO {
+    override fun criar(dadosToken: CriarTokenDTO): TokenDTO {
         if (tokenRepo.existsByEgressoMatricula(dadosToken.egresso.matricula!!)) {
             throw ResourceAlreadyExistsException(
                 TokenMessage.TOKEN_ALREADY_EXISTS.name,
@@ -67,11 +67,12 @@ class TokenService(
         return TokenDTO(
             token = savedToken.token,
             dataExpiracao = savedToken.dataExpiracao,
-            expirado = savedToken.expirado
+            expirado = savedToken.expirado,
+            egresso = savedToken.egresso?.matricula,
         )
     }
 
-    override fun recuperarToken(token: String): TokenDTO {
+    override fun recuperar(token: String): TokenDTO {
         val recoveredToken = tokenRepo.findByToken(token)
 
         if(recoveredToken == null) {
@@ -84,12 +85,13 @@ class TokenService(
         return TokenDTO(
             token = recoveredToken.token,
             dataExpiracao = recoveredToken.dataExpiracao,
-            expirado = recoveredToken.expirado
+            expirado = recoveredToken.expirado,
+            egresso = recoveredToken.egresso?.matricula
         )
     }
 
     @Transactional
-    override fun regenerarToken(dadosToken: RegenerarTokenDTO) {
+    override fun regenerar(dadosToken: RegenerarTokenDTO) {
         val token = when(dadosToken.tipoBusca) {
             TipoBuscaDTO.TOKEN -> dadosToken.token?.let { tokenRepo.findByToken(it) }
             TipoBuscaDTO.EMAIL -> dadosToken.email?.let { tokenRepo.findByEgressoPessoaEmail(it) }

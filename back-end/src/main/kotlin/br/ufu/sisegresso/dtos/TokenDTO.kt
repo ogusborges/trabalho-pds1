@@ -6,4 +6,5 @@ data class TokenDTO(
     var token: String?,
     var dataExpiracao: LocalDateTime?,
     var expirado: Boolean? = null,
+    var egresso: String? = null,
 )

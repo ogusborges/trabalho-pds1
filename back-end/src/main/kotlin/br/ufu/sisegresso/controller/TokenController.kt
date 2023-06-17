@@ -20,7 +20,7 @@ class TokenController(
         @RequestParam token: String,
     ): ResponseEntity<AppHttpResponse> {
         val responseBody = AppHttpResponse(
-            data = tokenService.recuperarToken(token)
+            data = tokenService.recuperar(token)
         )
 
         return ResponseEntity
@@ -32,7 +32,7 @@ class TokenController(
     fun regenerarToken(
         @Valid @RequestBody dadosToken: RegenerarTokenDTO,
     ): ResponseEntity<AppHttpResponse> {
-        tokenService.regenerarToken(dadosToken)
+        tokenService.regenerar(dadosToken)
 
         return ResponseEntity
             .status(HttpStatus.NO_CONTENT)
