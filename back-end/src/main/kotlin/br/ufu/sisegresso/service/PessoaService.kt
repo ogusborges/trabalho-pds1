@@ -29,7 +29,6 @@ class PessoaService(
 
     @Transactional
     override fun cadastrar(dadosPessoa: RegistroPessoaDTO): Pessoa {
-        println(pessoaRepo.existsPessoaByEmail(dadosPessoa.email))
         if (pessoaRepo.existsPessoaByEmail(dadosPessoa.email)) {
             throw ResourceAlreadyExistsException(
                 PessoaMessage.PESSOA_ALREADY_EXISTS.name,
