@@ -3,6 +3,7 @@ package br.ufu.sisegresso.dtos
 import br.ufu.sisegresso.model.Egresso
 import jakarta.persistence.*
 import org.springframework.format.annotation.DateTimeFormat
+import java.time.LocalDate
 import java.util.*
 
 data class ExperienciaProfissionalDTO(
@@ -12,8 +13,10 @@ data class ExperienciaProfissionalDTO(
     var salario: Double?,
 
     @field: DateTimeFormat(style = "yyyy-MM-dd")
-    var dataInicio: Date?,
+    var dataInicio: LocalDate?,
 
     @field: DateTimeFormat(style = "yyyy-MM-dd")
-    var dataFim: Date?
+    var dataFim: LocalDate?,
+
+    var tecnologias: String?,
 )

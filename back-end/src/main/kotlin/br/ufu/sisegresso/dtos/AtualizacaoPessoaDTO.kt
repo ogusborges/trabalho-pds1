@@ -1,7 +1,6 @@
 package br.ufu.sisegresso.dtos
 
 import br.ufu.sisegresso.model.Role
-import br.ufu.sisegresso.model.TipoContato
 import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
 import jakarta.persistence.Temporal
@@ -11,6 +10,7 @@ import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Null
 import jakarta.validation.constraints.Past
 import org.springframework.format.annotation.DateTimeFormat
+import java.time.LocalDate
 import java.util.*
 
 data class AtualizacaoPessoaDTO(
@@ -27,7 +27,7 @@ data class AtualizacaoPessoaDTO(
     @field:Past
     @field:DateTimeFormat(pattern = "yyyy-MM-dd")
     @field:Temporal(TemporalType.DATE)
-    val dataNascimento: Date?,
+    val dataNascimento: LocalDate?,
 
     val contatos: List<ContatoDTO>?,
 

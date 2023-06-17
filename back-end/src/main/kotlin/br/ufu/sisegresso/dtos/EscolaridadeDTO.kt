@@ -1,7 +1,7 @@
 package br.ufu.sisegresso.dtos
 
 import org.springframework.format.annotation.DateTimeFormat
-import java.util.*
+import java.time.LocalDate
 
 data class EscolaridadeDTO(
     var id: Int?,
@@ -10,8 +10,8 @@ data class EscolaridadeDTO(
     var descricao: String?,
 
     @field: DateTimeFormat(style = "yyyy-MM-dd")
-    var dataInicio: Date?,
+    var dataInicio: LocalDate?,
 
     @field: DateTimeFormat(style = "yyyy-MM-dd")
-    var dataFim: Date?
+    var dataFim: LocalDate?,
 )

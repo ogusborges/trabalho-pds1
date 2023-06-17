@@ -13,7 +13,7 @@ data class ContatoDTO(
     val id: Int?,
 
     @field:Null
-    @field:Enumerated(EnumType.ORDINAL)
+    @field:Enumerated(EnumType.STRING)
     val tipo: TipoContato?,
 
     val valor: String?
