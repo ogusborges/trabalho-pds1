@@ -3,6 +3,7 @@ package br.ufu.sisegresso.template
 import br.com.six2six.fixturefactory.Fixture
 import br.com.six2six.fixturefactory.Rule
 import br.com.six2six.fixturefactory.loader.TemplateLoader
+import br.ufu.sisegresso.dtos.TokenDTO
 import br.ufu.sisegresso.model.Egresso
 import br.ufu.sisegresso.model.Token
 import java.time.LocalDateTime
