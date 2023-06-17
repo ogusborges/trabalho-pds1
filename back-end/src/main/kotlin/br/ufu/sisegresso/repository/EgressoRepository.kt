@@ -8,18 +8,7 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface EgressoRepository : JpaRepository<Egresso, Int> {
-    @Query(name = """
-        SELECT
-            E.*
-        FROM
-            egresso AS E
-            
-            INNER JOIN system.pessoa AS P
-                ON E.pessoa_id = P.id
-        WHERE
-            P.email = :email
-    """)
-    fun findByPessoaEmail(@Param("email") email: String): Egresso?
-
+    fun findByPessoaEmail(email: String): Egresso?
+    fun findByMatricula(matricula: String): Egresso?
     fun existsEgressoByMatricula(matricula: String): Boolean
 }
