@@ -37,7 +37,8 @@ dependencies {
 	testImplementation("org.springframework.security:spring-security-test")
 	testImplementation("br.com.six2six:fixture-factory:3.1.0")
 
-
+	// https://mvnrepository.com/artifact/com.ninja-squad/springmockk
+	testImplementation("com.ninja-squad:springmockk:4.0.2")
 }
 
 tasks.withType<KotlinCompile> {
