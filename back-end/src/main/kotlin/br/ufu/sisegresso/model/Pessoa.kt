@@ -4,6 +4,9 @@ import jakarta.persistence.*
 import org.springframework.lang.NonNull
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZoneOffset
 import java.util.Date
 
 @Entity
@@ -14,10 +17,10 @@ class Pessoa(
     var id: Int? = null,
 
     @NonNull
-    var nome: String? = "",
+    var nome: String = "",
 
     @NonNull
-    var sobrenome: String? = "",
+    var sobrenome: String = "",
 
     @NonNull
     var email: String = "",
@@ -26,7 +29,7 @@ class Pessoa(
 
     @NonNull
     @Column(name = "data_nasc")
-    var dataNascimento: Date = Date(0),
+    var dataNascimento: LocalDate = LocalDate.now(),
 
     @OneToMany(cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
     @JoinColumn(name = "pessoa_id")

@@ -1,6 +1,7 @@
 package br.ufu.sisegresso.model
 
 import jakarta.persistence.*
+import java.time.LocalDate
 import java.util.*
 
 @Entity
@@ -13,8 +14,14 @@ class ExperienciaProfissional(
     var cargo: String? = "",
     var empresa: String? = "",
     var salario: Double? = null,
-    var dataInicio: Date? = Date(),
-    var dataFim: Date? = Date(),
+
+    @Column(name = "data_ini")
+    var dataInicio: LocalDate = LocalDate.now(),
+
+    @Column(name = "data_fim")
+    var dataFim: LocalDate? = null,
+
+    var tecnologias: String? = null,
 
     @ManyToOne
     @JoinColumn(name = "egresso_id", referencedColumnName = "id")
