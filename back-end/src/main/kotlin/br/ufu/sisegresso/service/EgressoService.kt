@@ -2,6 +2,7 @@ package br.ufu.sisegresso.service
 
 import br.ufu.sisegresso.dtos.*
 import br.ufu.sisegresso.exception.ResourceAlreadyExistsException
+import br.ufu.sisegresso.exception.ResourceAttributeInvalidException
 import br.ufu.sisegresso.exception.ResourceNotFoundException
 import br.ufu.sisegresso.messages.EgressoMessage
 import br.ufu.sisegresso.model.*
@@ -9,11 +10,13 @@ import br.ufu.sisegresso.repository.EgressoRepository
 import br.ufu.sisegresso.repository.PessoaRepository
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
+import java.time.LocalDate
 
 
 interface IEgressoService {
-    fun cadastrarEgresso(dadosEgresso: CadastroEgressoDTO): Egresso
-    fun atualizarEgresso(dadosAtualizacao: AtualizacaoEgressoDTO)
+    fun cadastrar(dadosEgresso: CadastroEgressoDTO): Egresso
+    fun atualizar(dadosAtualizacao: AtualizacaoEgressoDTO)
+    fun recuperar(dadosBusca: RecuperarEgressoDTO): EgressoDTO
 }
 
 @Service
@@ -26,7 +29,7 @@ class EgressoService(
 ): IEgressoService{
 
     @Transactional
-    override fun cadastrarEgresso(dadosEgresso: CadastroEgressoDTO): Egresso {
+    override fun cadastrar(dadosEgresso: CadastroEgressoDTO): Egresso {
         if (egressoRepo.existsEgressoByMatricula(dadosEgresso.matricula!!)) {
             throw ResourceAlreadyExistsException(
                 EgressoMessage.EGRESSO_ALREADY_EXISTS.name,
@@ -54,7 +57,7 @@ class EgressoService(
 
         egresso = egressoRepo.save(egresso)
 
-        val token = tokenService.criarToken(CriarTokenDTO(egresso))
+        val token = tokenService.criar(CriarTokenDTO(egresso))
 
         emailService.sendEmail(
             EmailDTO(
@@ -67,7 +70,7 @@ class EgressoService(
         return egresso
     }
 
-    override fun atualizarEgresso(dadosAtualizacao: AtualizacaoEgressoDTO) {
+    override fun atualizar(dadosAtualizacao: AtualizacaoEgressoDTO) {
         val egresso: Egresso? = egressoRepo.findByPessoaEmail(dadosAtualizacao.email!!)
 
         if(egresso == null) {
@@ -91,7 +94,7 @@ class EgressoService(
                         instituicao = escolaridadeInfo.instituicao ?: "",
                         tipo = escolaridadeInfo.tipo ?: "",
                         descricao = escolaridadeInfo.descricao ?: "",
-                        dataInicio = escolaridadeInfo.dataInicio,
+                        dataInicio = escolaridadeInfo.dataInicio ?: LocalDate.now(),
                         dataFim = escolaridadeInfo.dataFim,
                         egresso = egresso
                     )
@@ -137,8 +140,10 @@ class EgressoService(
                         cargo = expProfissionalInfo.cargo ?: "",
                         empresa = expProfissionalInfo.empresa ?: "",
                         salario = expProfissionalInfo.salario,
-                        dataInicio = expProfissionalInfo.dataInicio,
-                        dataFim = expProfissionalInfo.dataFim
+                        dataInicio = expProfissionalInfo.dataInicio ?: LocalDate.now(),
+                        dataFim = expProfissionalInfo.dataFim,
+                        tecnologias = expProfissionalInfo.tecnologias,
+                        egresso = egresso
                     )
 
                     expProfissionais.add(expProfissional)
@@ -156,7 +161,8 @@ class EgressoService(
                         expProfissionalInfo.empresa == null &&
                         expProfissionalInfo.salario == null &&
                         expProfissionalInfo.dataInicio == null &&
-                        expProfissionalInfo.dataFim == null)
+                        expProfissionalInfo.dataFim == null &&
+                        expProfissionalInfo.tecnologias == null)
                     {
                         expProfissionais.remove(expProfissional)
                     } else {
@@ -166,6 +172,7 @@ class EgressoService(
                             salario = expProfissionalInfo.salario ?: salario
                             dataInicio = expProfissionalInfo.dataInicio ?: dataInicio
                             dataFim = expProfissionalInfo.dataFim ?: dataFim
+                            tecnologias = expProfissionalInfo.tecnologias
                         }
                     }
                 }
@@ -175,5 +182,70 @@ class EgressoService(
         }
 
         egressoRepo.save(egresso)
+    }
+
+    override fun recuperar(dadosBusca: RecuperarEgressoDTO): EgressoDTO {
+        val egresso: Egresso? = when (dadosBusca.tipoBusca) {
+            TipoBuscaEgresso.TOKEN -> dadosBusca.token?.let {
+                val token = tokenService.recuperar(it)
+                token.egresso?.let { egressoRepo.findByMatricula(it) }
+            }
+
+            TipoBuscaEgresso.EMAIL -> dadosBusca.email?.let { egressoRepo.findByPessoaEmail(it) }
+
+            TipoBuscaEgresso.MATRICULA -> dadosBusca.matricula?.let { egressoRepo.findByMatricula(it) }
+
+            else -> throw ResourceAttributeInvalidException(
+                EgressoMessage.INVALID_QUERY_TYPE.name,
+                EgressoMessage.INVALID_QUERY_TYPE.message,
+            )
+        }
+
+        if (egresso == null) {
+            throw ResourceNotFoundException(
+                EgressoMessage.EGRESSO_NOT_FOUND.name,
+                EgressoMessage.EGRESSO_NOT_FOUND.message,
+            )
+        }
+
+        val listaContatos = egresso.pessoa?.contatos
+            ?.map { ContatoDTO(id = it.id, tipo = it.tipo, valor = it.valor) }
+
+        val listaExpAcademica = egresso.escolaridades
+            .map {
+                EscolaridadeDTO(
+                    id = it.id,
+                    instituicao = it.instituicao,
+                    tipo = it.tipo,
+                    descricao = it.descricao,
+                    dataInicio = it.dataInicio,
+                    dataFim = it.dataFim,
+                )
+            }
+
+        val listaExpProfissionais = egresso.experienciaProf
+            .map {
+                ExperienciaProfissionalDTO(
+                    id = it.id,
+                    cargo = it.cargo,
+                    empresa = it.empresa,
+                    salario = it.salario,
+                    dataInicio = it.dataInicio,
+                    dataFim = it.dataFim,
+                    tecnologias = it.tecnologias
+                )
+
+            }
+
+        return EgressoDTO(
+            email = egresso.pessoa?.email,
+            nome = egresso.pessoa?.nome,
+            sobrenome = egresso.pessoa?.sobrenome,
+            matricula = egresso.matricula,
+            contatos = listaContatos,
+            expProfissionais = listaExpProfissionais,
+            infoAcademicas = listaExpAcademica,
+            dataNascimento = egresso.pessoa?.dataNascimento,
+        )
     }
 }
