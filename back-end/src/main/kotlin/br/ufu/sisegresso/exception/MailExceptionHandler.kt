@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 
 @RestControllerAdvice
 class MailExceptionHandler {
-
     @ExceptionHandler(*arrayOf(
         InternalEmailException::class
     ))

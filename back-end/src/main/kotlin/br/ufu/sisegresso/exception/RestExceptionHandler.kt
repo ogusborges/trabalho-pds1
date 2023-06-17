@@ -14,48 +14,18 @@ import org.springframework.web.bind.annotation.ExceptionHandler
 
 @ControllerAdvice
 class RestExceptionHandler {
-
-
-
-    @ExceptionHandler(*arrayOf(
-        ResourceAttributeInvalidException::class,
-        HttpMessageNotReadableException::class
-    ))
-    fun resourceAttributeInvalidHandler(exception: Exception): ResponseEntity<AppHttpResponse> {
-        val errorName = when(exception) {
-            is HttpMessageNotReadableException -> "httpMessageInvalid"
-            is ResourceAttributeInvalidException -> "resourceAttributeInvalid"
-            else -> "unknownError"
-        }
-
-        val appError = AppError(
-            name = errorName,
-            message = exception.message ?: ""
-        )
-
-        val responseBody = AppHttpResponse(
-            error = listOf(appError)
-        )
-
-        return ResponseEntity
-            .status(HttpStatus.BAD_REQUEST)
-            .body(responseBody)
-    }
-
-
-
     @ExceptionHandler(MethodArgumentNotValidException::class)
     fun methodArgumentNotValidExceptionHandler(exception: MethodArgumentNotValidException): ResponseEntity<AppHttpResponse> {
         val fieldErrors = exception.bindingResult.getFieldErrors()
         val appErrors: MutableList<AppError> = mutableListOf()
 
-        for(error in fieldErrors) {
-            val erro = AppError().apply {
-                name = error.field
-                message = error.defaultMessage ?: ""
+        for(_error in fieldErrors) {
+            val error = AppError().apply {
+                name = _error.field
+                message = _error.defaultMessage ?: ""
             }
 
-            appErrors.add(erro)
+            appErrors.add(error)
         }
 
         val responseBody = AppHttpResponse(
