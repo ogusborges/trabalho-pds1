@@ -34,7 +34,7 @@ class Egresso(
 
     @OneToMany(cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
     @JoinColumn(name = "egresso_id")
-    var experienciaProf: MutableList<ExperienciaProfissional> = mutableListOf()
+    var experienciaProf: MutableList<ExperienciaProfissional> = mutableListOf(),
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
