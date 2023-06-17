@@ -1,17 +1,15 @@
 package br.ufu.sisegresso.controller
 
+import br.ufu.sisegresso.dtos.AppHttpResponse
 import br.ufu.sisegresso.dtos.AtualizacaoEgressoDTO
 import br.ufu.sisegresso.dtos.CadastroEgressoDTO
+import br.ufu.sisegresso.dtos.RecuperarEgressoDTO
 import br.ufu.sisegresso.service.IEgressoService
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.PatchMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping(
@@ -22,11 +20,26 @@ import org.springframework.web.bind.annotation.RestController
 class EgressoController(
     private val egressoService: IEgressoService
 ) {
+    @GetMapping
+    fun recuperarEgresso(
+        @Valid dadosBusca: RecuperarEgressoDTO,
+    ): ResponseEntity<Any> {
+        val egresso = egressoService.recuperar(dadosBusca)
+
+        val responseBody = AppHttpResponse(
+            data = egresso
+        )
+
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(responseBody)
+    }
+
     @PostMapping("")
     fun cadastrarEgresso(
         @Valid @RequestBody dadosEgresso: CadastroEgressoDTO,
     ): ResponseEntity<Any> {
-        egressoService.cadastrarEgresso(dadosEgresso)
+        egressoService.cadastrar(dadosEgresso)
 
         return ResponseEntity
             .status(HttpStatus.NO_CONTENT)
@@ -37,7 +50,7 @@ class EgressoController(
     fun atualizarEgresso(
         @Valid @RequestBody dadosAtualizacao: AtualizacaoEgressoDTO,
     ): ResponseEntity<Any> {
-        egressoService.atualizarEgresso(dadosAtualizacao)
+        egressoService.atualizar(dadosAtualizacao)
 
         return ResponseEntity
             .status(HttpStatus.NO_CONTENT)
