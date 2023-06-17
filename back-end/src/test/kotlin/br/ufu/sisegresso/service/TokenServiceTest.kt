@@ -49,7 +49,7 @@ class TokenServiceTest(
         val expectedMessage = TokenMessage.TOKEN_ALREADY_EXISTS.message
 
         Assertions.assertThatExceptionOfType(ResourceAlreadyExistsException::class.java)
-            .isThrownBy { underTest.criarToken(CriarTokenDTO(egresso)) }
+            .isThrownBy { underTest.criar(CriarTokenDTO(egresso)) }
             .withMessage(expectedMessage)
     }
 
@@ -74,7 +74,7 @@ class TokenServiceTest(
         Mockito.`when`(tokenRepo.save(Mockito.any(Token::class.java)))
             .thenReturn(token)
 
-        underTest.criarToken(CriarTokenDTO(egresso))
+        underTest.criar(CriarTokenDTO(egresso))
 
         Mockito.verify(tokenRepo, times(1)).save(argCaptor.capture())
 
@@ -89,13 +89,14 @@ class TokenServiceTest(
         val expected = TokenDTO(
             token = token.token,
             dataExpiracao = token.dataExpiracao,
-            expirado = token.expirado
+            expirado = token.expirado,
+            egresso = token.egresso?.matricula
         )
 
         Mockito.`when`(tokenRepo.findByToken(Mockito.anyString()))
             .thenReturn(token)
 
-        val result = underTest.recuperarToken(token.token!!)
+        val result = underTest.recuperar(token.token!!)
 
         Assertions.assertThat(result).isEqualTo(expected)
     }
@@ -106,7 +107,7 @@ class TokenServiceTest(
             .gimme("validToken")
 
         Assertions.assertThatExceptionOfType(ResourceNotFoundException::class.java)
-            .isThrownBy { underTest.recuperarToken(token.token!!) }
+            .isThrownBy { underTest.recuperar(token.token!!) }
             .withMessage(TokenMessage.TOKEN_NOT_FOUND.message)
     }
 
@@ -118,7 +119,7 @@ class TokenServiceTest(
         )
 
         Assertions.assertThatExceptionOfType(ResourceAttributeInvalidException::class.java)
-            .isThrownBy { underTest.regenerarToken(param) }
+            .isThrownBy { underTest.regenerar(param) }
             .withMessage(TokenMessage.INVALID_QUERY_TYPE.message)
     }
 
@@ -133,7 +134,7 @@ class TokenServiceTest(
             .thenReturn(null)
 
         Assertions.assertThatExceptionOfType(ResourceNotFoundException::class.java)
-            .isThrownBy { underTest.regenerarToken(param) }
+            .isThrownBy { underTest.regenerar(param) }
             .withMessage(TokenMessage.TOKEN_NOT_FOUND.message)
     }
 
@@ -154,7 +155,7 @@ class TokenServiceTest(
         Mockito.`when`(tokenRepo.findByToken(param.token!!))
             .thenReturn(token)
 
-        underTest.regenerarToken(param)
+        underTest.regenerar(param)
 
         Mockito.verify(tokenRepo, times(1)).save(argCaptor.capture())
 
