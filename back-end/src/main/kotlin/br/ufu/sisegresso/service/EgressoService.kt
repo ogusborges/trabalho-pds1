@@ -62,7 +62,7 @@ class EgressoService(
         emailService.sendEmail(
             EmailDTO(
                 subject = "Cadastro - Sistema de Monitoramento de Egressos",
-                messageBody = "Esse é seu token: ${token.token} e expira em ${token.dataExpiracao}",
+                messageBody = "Esse é seu token: http://localhost:5173/egresso/cadastro/step/1/${token.token} e expira em ${token.dataExpiracao}",
                 recipient = pessoa.email
             )
         )
