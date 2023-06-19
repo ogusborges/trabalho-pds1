@@ -1,35 +1,35 @@
 spring:
   datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/sisegresso
-    username: postgres
-    password: postgresgus
+    driver-class-name: 
+    url: 
+    username: 
+    password: 
   jpa:
-    show-sql: true
+    show-sql: 
     properties:
       hibernate:
-        format_sql: true
-        default_schema: dev
+        format_sql: 
+        default_schema:
   flyway:
-    enabled: true
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/sisegresso
-    user: postgres
-    password: postgresgus
-    schemas: dev
+    enabled: 
+    driver-class-name: 
+    url: 
+    user: 
+    password: 
+    schemas: 
   mail:
-    username: ogusborges@outlook.com
-    password: C412f5bb
-    host: smtp-mail.outlook.com
-    port: 587
+    username: 
+    password: 
+    host: 
+    port: 
 
     properties:
       mail:
-        protocol: smtp
-        tls: true
+        protocol: 
+        tls:
         smtp:
-          auth: true
+          auth: 
           ssl:
-            trust: smtp-mail.outlook.com
+            trust: 
           starttls:
-            enable: true
+            enable: 
