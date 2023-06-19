@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { onMounted, ref, watch, type PropType, type Ref, normalizeClass } from 'vue'
-import { useEntityEgressoStore } from '@/stores/EntityEgressoRegister'
+import { useCadastroEgressoStore } from '@/stores/CadastroEgressoStore'
 import type { ValidationError } from '@/service/RequestResponse'
+
+const stepThreeData = useCadastroEgressoStore().stepThree
 
 interface InfoPessoalErrorState {
   showNascimentoError: Boolean
@@ -37,8 +39,6 @@ watch(
   }
 )
 
-const infoPessoais = useEntityEgressoStore().infoPessoais
-
 interface informacoesPessoaisEmit {
   (eventName: 'changeEntityType', event: Event, entityType: String): void
 }
@@ -52,14 +52,14 @@ const emit = defineEmits<informacoesPessoaisEmit>()
     <div id="informacoes-pessoais">
       <div class="form-field-group" id="email">
         <label class="form-field-label" for="email">E-mail</label>
-        <input type="text" name="email" v-model="infoPessoais.email" />
+        <input type="text" name="email" v-model="stepThreeData.email" disabled />
         <span class="form-field-error" v-if="errorState.showEmailError"
           >Deve ser um e-mail valido</span
         >
       </div>
       <div class="form-field-group" id="nascimento">
         <label class="form-field-label" for="nascimento">Data de Nascimento</label>
-        <input type="text" name="nascimento" v-model="infoPessoais.nascimento" />
+        <input type="date" name="nascimento" v-model="stepThreeData.dataNascimento" />
         <span class="form-field-error" v-if="errorState.showNascimentoError"
           >Deve ser uma data de nascimento válida</span
         >
@@ -83,6 +83,6 @@ const emit = defineEmits<informacoesPessoaisEmit>()
 
 #nascimento {
   grid-row: 1 / 1;
-  grid-column:  2/ 3;
+  grid-column: 2/ 3;
 }
 </style>

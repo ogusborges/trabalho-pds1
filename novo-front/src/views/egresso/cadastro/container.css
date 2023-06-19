@@ -1,0 +1,26 @@
+#cadastrar-container {
+    background-color: #fff;
+    width: 70%;
+    margin: 1.2em 0;
+    align-self: center;
+    padding: 1em 2em;
+    border-top: #4b8af9 solid 0.3em;
+  }
+  
+  #form-button-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  #form-button-container > button {
+    padding: 1.2em 3em;
+    margin: 0.5em 1em 0 0;
+  }
+
+  .container-title {
+    font-size: 2em;
+    color: #639af9;
+    font-weight: 600;
+    text-align: center;
+  }

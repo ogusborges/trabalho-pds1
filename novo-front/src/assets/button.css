@@ -1,7 +1,10 @@
-.button-primary {
-  background-color: #3c84ff;
+.button {
   padding: 1em;
   border: 0px;
+}
+
+.button-primary {
+  background-color: #3c84ff;
   color: #fff;
   transition: 0.3s;
 }
@@ -11,10 +14,29 @@
   transition: 0.3s;
 }
 
+.button-remove {
+  background-color: #dadada;
+  height: 50%;
+  vertical-align: center;
+}
+
+.button-remove:hover {
+  background-color: #DDDCE3;
+}
+
+.button-add {
+  background-color: #6AB1CE;
+  color: #fff;
+  transition: 0.3s;
+}
+
+.button-add:hover {
+  background-color: #59BEE6;
+  transition: 0.3s;
+}
+
 .button-secondary {
   background-color: #ff9f38;
-  padding: 1em;
-  border: 0px;
   color: #fff;
   transition: 0.3s;
 }

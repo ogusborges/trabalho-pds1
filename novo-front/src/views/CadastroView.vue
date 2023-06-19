@@ -1,19 +1,19 @@
 <script setup lang="ts">
+import InformacoesPessoais from '@/components/CadastroView/InformacoesPessoais.vue'
+import InformacoesEgresso from '@/components/CadastroView/InformacoesEgresso.vue'
+import Modal from '@/components/Modal.vue'
 import AppHeader from '@/components/AppHeader.vue'
+
+import { ref } from 'vue'
+
+import { useEntityStore } from '@/stores/EntityRegister'
+
+import { isApiError, isFieldValidationError, type ValidationError } from '@/service/RequestResponse'
+import entityService from '@/service/CadastroPessoaService'
+import type { SendEntityInfo } from '@/service/CadastroPessoaService'
 
 import '@/assets/button.css'
 
-import entityService from '../service/EntityService'
-import { useEntityStore } from '@/stores/EntityRegister'
-import Modal from '@/components/Modal.vue'
-
-import { isApiError, isFieldValidationError, type ValidationError } from '@/service/RequestResponse'
-
-import type { SendEntityInfo } from '@/service/EntityService'
-
-import { ref } from 'vue'
-import InformacoesPessoais from '@/components/CadastroView/InformacoesPessoais.vue'
-import InformacoesEgresso from '@/components/CadastroView/InformacoesEgresso.vue'
 import { EntityValidationException } from '@/exception/EntityValidationException'
 
 const entityStore = useEntityStore()
@@ -48,7 +48,7 @@ const enviarDados = async (_: Event) => {
     if (typeof result === 'boolean' || result instanceof Boolean) {
       if (result == true) {
         modalTitle.value = 'Sucesso'
-        modalMessage.value = 'Deu bom na hora de cadastrar o egresso'
+        modalMessage.value = 'Cadastrado com sucesso!'
         entityStore.resetEntityStore()
       } else {
         modalTitle.value = 'Erro'
@@ -125,8 +125,8 @@ const isEgresso = () => entityStore.infoPessoais.tipo == 'EGRESSO'
         <InformacoesPessoais v-bind:errors="pessoalValidationErrors ?? []" />
         <InformacoesEgresso v-bind:errors="egressoValidationErrors ?? []" v-if="isEgresso()" />
         <div id="form-button-container">
-          <button class="button-primary" type="submit">Enviar</button>
-          <button class="button-secondary" type="reset" v-on:click.stop="resetFormFields">
+          <button class="button button-primary" type="submit">Enviar</button>
+          <button class="button button-secondary" type="reset" v-on:click.stop="resetFormFields">
             Limpar
           </button>
         </div>

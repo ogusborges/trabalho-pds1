@@ -12,6 +12,7 @@ form > * {
 .form-group {
   border: #4b8af9 solid 1px;
   border-radius: 0.3em;
+  margin: 1.2em 0;
 }
 
 .form-group > legend {
@@ -69,6 +70,22 @@ select {
   border-radius: 0px;
 }
 
+input:disabled,
+input:disabled:hover {
+  background-color: #d3d3d3;
+}
+
+input[type='radio'] {
+  appearance: none;
+  background-color: #f3f3f3;
+  height: 1em;
+  width: 1em;
+}
+
+input[type='radio']:checked {
+  background-color: #d8d8d8;
+}
+
 .form-footer {
   display: flex;
   justify-content: end;
@@ -77,4 +94,11 @@ select {
 
 .form-footer > * {
   margin: 0.5em;
+}
+
+.field-group {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  margin: 0.8em 0px;
 }

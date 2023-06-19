@@ -1,4 +1,6 @@
+import { PessoaServiceException, PessoaServiceMessages } from '@/exception/PessoaServiceException'
 import { EntityValidationException } from '@/exception/EntityValidationException'
+import type { Contato, InformacoesPessoais, InformacoesInterno } from '@/types/Pessoa'
 import {
   isApiError,
   type ApiError,
@@ -6,20 +8,32 @@ import {
   type ValidationError,
   isFieldValidationError
 } from '@/service/RequestResponse'
-import axios, { AxiosError } from 'axios'
+import axios, { Axios, AxiosError } from 'axios'
 
-interface InformacoesPessoais {
-  nome: String
-  sobrenome: String
-  email: String
-  tipo: String
+
+export enum TipoContato {
+  TELEFONE = "TELEFONE",
+  EMAIL = "EMAIL",
+  LINKEDIN = "LINKEDIN",
+  CELULAR = "CELULAR",
+  GITHUB = "GITHUB",
+  INSTAGRAM = "INSTAGRAM",
+  FACEBOOK = "FACEBOOK",
+  TWITTER = "TWITTER",
+}
+
+export interface PATCHPessoaRequest {
+  email?: String,
+  nome?: String,
+  sobrenome?: String,
+  senha?: String,
+  dataNascimento?: String,
+  contatos?: Contato[],
 }
 
 interface InformacoesEgresso {
   matricula: String
 }
-
-interface InformacoesInterno {}
 
 interface POSTCadastroInterno {}
 
@@ -90,6 +104,41 @@ class EntityService {
         return false
       }
     }
+  }
+
+  public async updatePessoa(info: PATCHPessoaRequest) {
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: ''
+    }
+
+    const endpoint = 'pessoa'
+
+    try {
+      const response = await axios.patch<ApiHttpResponse<{}>>(
+        `http://localhost:8080/${endpoint}`,
+        JSON.stringify(info),
+        { headers: headers }
+      )
+
+      if(response.status == 204) { return response.data.data }
+    } catch(exception: any) {
+      if(exception instanceof AxiosError) {
+        if(exception?.response?.data) { return exception.response?.data.error }
+        switch(exception.status) {
+          case 500:
+            throw new PessoaServiceException(PessoaServiceMessages.INTERNAL_SERVER_ERROR)
+
+          case 404:
+            throw new PessoaServiceException(PessoaServiceMessages.NOT_FOUND)
+
+          default:
+            throw new PessoaServiceException(PessoaServiceMessages.UNKNOWN_ERROR)
+        }
+      }
+    }
+
+    return false
   }
 
   public isEgresso(info: InformacoesEgresso | InformacoesInterno): info is InformacoesEgresso {

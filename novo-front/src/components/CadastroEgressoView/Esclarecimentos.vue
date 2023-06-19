@@ -52,28 +52,45 @@
 
 <template>
   <fieldset class="form-group borda">
-    
     <div id="informacoes-esclarecimentos">
-
       <div class="form-field-group" id="nome">
         <div id="video">
-            <iframe id="frame" src="https://www.youtube-nocookie.com/embed/3QsNIaD4RbU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          <iframe
+            id="frame"
+            src="https://www.youtube-nocookie.com/embed/3QsNIaD4RbU"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          ></iframe>
         </div>
-        <h4 id="esclarecimentos">
-            Gostaríamos de convidá-lo a participar de uma iniciativa importante que visa entender o impacto da universidade na sociedade. Como um ex-aluno, 
-            você tem uma perspectiva única sobre como sua experiência educacional o preparou para o mundo além da sala de aula. Para nos ajudar a entender 
-            melhor esse impacto, estamos solicitando sua colaboração no preenchimento de um formulário com informações sobre sua vida pós-universidade.
-            É importante destacar que os interessados nessas informações são as reitorias de graduação e pós-graduação da universidade, que utilizam os 
-            dados para avaliar a eficácia de nossos programas e serviços educacionais. O formulário será utilizado para coletar informações sobre sua carreira, 
-            atividades de voluntariado, participação em organizações, entre outras informações relevantes. Isso nos permitirá avaliar melhor como a universidade 
-            contribuiu para o seu sucesso e como podemos continuar aprimorando nossos processos para melhor atender às necessidades de nossos alunos.
-            É importante enfatizar que todas as informações fornecidas serão mantidas em estrita confidencialidade e utilizadas apenas para fins de pesquisa e 
-            análise interna. Os dados não serão compartilhados com terceiros, a menos que seja necessário por lei ou por autorização explícita do próprio titular 
-            dos dados.
-            Além disso, queremos ressaltar que você tem o direito de acessar, corrigir e excluir suas informações pessoais a qualquer momento. Para fazer isso, 
-            basta entrar em contato conosco por meio dos canais de comunicação disponibilizados. Você também pode visualizar o termo de consentimento ao 
-            clicar no botão "Visualizar Termo".
-        </h4>
+        <p class="esclarecimentos">
+          Gostaríamos de convidá-lo a participar de uma iniciativa importante que visa entender o
+          impacto da universidade na sociedade. Como um ex-aluno, você tem uma perspectiva única
+          sobre como sua experiência educacional o preparou para o mundo além da sala de aula. Para
+          nos ajudar a entender melhor esse impacto, estamos solicitando sua colaboração no
+          preenchimento de um formulário com informações sobre sua vida pós-universidade. É
+          importante destacar que os interessados nessas informações são as reitorias de graduação e
+          pós-graduação da universidade, que utilizam os dados para avaliar a eficácia de nossos
+          programas e serviços educacionais. 
+        </p>
+        <p class="esclarecimentos">
+          O formulário será utilizado para coletar informações
+          sobre sua carreira, atividades de voluntariado, participação em organizações, entre outras
+          informações relevantes. Isso nos permitirá avaliar melhor como a universidade contribuiu
+          para o seu sucesso e como podemos continuar aprimorando nossos processos para melhor
+          atender às necessidades de nossos alunos. 
+        </p>
+        <p class="esclarecimentos">
+          É importante enfatizar que todas as informações
+          fornecidas serão mantidas em estrita confidencialidade e utilizadas apenas para fins de
+          pesquisa e análise interna. Os dados não serão compartilhados com terceiros, a menos que
+          seja necessário por lei ou por autorização explícita do próprio titular dos dados. Além
+          disso, queremos ressaltar que você tem o direito de acessar, corrigir e excluir suas
+          informações pessoais a qualquer momento. Para fazer isso, basta entrar em contato conosco
+          por meio dos canais de comunicação disponibilizados. Você também pode visualizar o termo
+          de consentimento ao clicar no botão "Visualizar Termo".
+        </p>
       </div>
     </div>
   </fieldset>
@@ -93,18 +110,18 @@
   margin-bottom: 2%;
 }
 
-#esclarecimentos{
+.esclarecimentos {
   grid-row: 2 / 2;
   text-align: justify;
+  margin: 0.8em 0;
 }
 
-#frame{
+#frame {
   width: 35vw;
   height: 20vw;
 }
 
-.borda{
- border: none;
+.borda {
+  border: none;
 }
-
 </style>
